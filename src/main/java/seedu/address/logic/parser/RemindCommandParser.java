@@ -22,7 +22,6 @@ public class RemindCommandParser implements Parser<RemindCommand> {
      * and returns a {@code RemindCommand} object for execution.
      * @throws ParseException if the user input does not conform to the expected format
      */
-    @SuppressWarnings("checkstyle:LineLength")
     @Override
     public RemindCommand parse(String args) throws ParseException {
         requireNonNull(args);
