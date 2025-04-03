@@ -604,7 +604,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 *{More to be added}*
 
-### Use case: Undo the last action
+**Use case: Undo the last action**
 
 **MSS**
 
@@ -622,7 +622,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-### Use case: Redo the last undone action
+**Use case: Redo the last undone action**
 
 **MSS**
 
@@ -639,7 +639,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-### Use case: Switch between different tabs
+**Use case: Switch between different tabs**
 
 **MSS**
 
