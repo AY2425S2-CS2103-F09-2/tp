@@ -9,7 +9,7 @@ title: Developer Guide
 
 ## **Acknowledgements**
 
-* {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+* This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -117,8 +117,7 @@ How the parsing works:
 ### Model component
 **API** : [`Model.java`](https://github.com/AY2425S2-CS2103-F09-2/tp/blob/master/src/main/java/seedu/address/model/Model.java)
 
-<img src="images/BetterModelClassDiagram.png" width="450" />
-
+<img src="images/ModelClassDiagram.png" width="450" />
 
 The `Model` component,
 
@@ -182,6 +181,25 @@ The following sequence diagram illustrates the execution flow of a command requi
 This confirmation dialog acts as an extra safeguard,
 ensuring users are aware of the consequences before executing commands,
 while undo provides an additional safety net.
+
+### Scheduling a Session
+The `Schedule Command` follows a structured sequence to ensure that a session is scheduled properly. Below is an explanation of how the components interact when the user issues the schedule command.
+
+Step 1. LogicManager receives the schedule command and delegates it to the Parser.
+
+Step 2. The Parser tokenizes the command and extracts details such as date, time, and duration, then requests Session to parse them.
+
+Step 3. The Parser creates a Session object with the parsed details and sends it back to LogicManager.
+
+Step 4. LogicManager passes the session to the Model, which checks if the session already exists.
+
+Step 5. If valid, the Model adds the session to the SessionList.
+
+Step 6. LogicManager creates a CommandResult, confirming that the session was successfully scheduled, and returns it to the user.
+
+The following Schedule Sequence Diagram visually represents these interactions.
+
+<img src="images/ScheduleSequenceDiagram.png" width="574" />
 
 ### \[Proposed\] Undo/redo feature
 
@@ -525,6 +543,66 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 2c1. EduEase will prioritise appending to the note.
 
       Use case resumes at step 3.
+
+**Use case: Schedule a tutoring session**
+
+**MSS**
+
+1. Tutor enters the command to schedule a session.
+2. EduEase validates the input parameters (student name, subject, date, time, and duration).
+3. If all parameters are valid, EduEase schedules the session.
+4. EduEase confirms the session has been scheduled with a success message, displaying the session details.
+
+  Use case ends.
+
+**Extensions**
+* 2a. If a parameter is missing or invalid.
+
+    * 2a1. EduEase displays an error message based on the specific issue.
+
+      Use case resumes at step 1.
+
+* 2b. If any argument is invalid.
+
+    * 2b1. EduEase displays the original session details.
+
+      Use case resumes at step 3.
+
+**Use case: Edit a scheduled session**
+
+**MSS**
+
+1. Tutor enters the command to edit a scheduled session.
+2. EduEase validates the input parameters (session index, student name, subject, date, time, and duration).
+3. If all parameters are valid, EduEase updates the scheduled session.
+4. EduEase confirms the session has been updated with a success message, displaying the updated session details.
+
+  Use case ends.
+
+**Extensions**
+* 2a. If the session index is missing or invalid.
+
+    * 2a1. EduEase displays an error message based on the specific issue.
+
+      Use case resumes at step 1.
+
+**Use case: Cancel a scheduled session**
+
+**MSS**
+
+1. Tutor enters the command to cancel a scheduled session.
+2. EduEase validates the input parameter (session index).
+3. If the session exists, EduEase cancels the session.
+4. EduEase confirms the session has been cancelled with a success message, indicating the session has been removed.
+
+  Use case ends.
+
+**Extensions**
+* 2a. If the session index is missing or invalid.
+
+    * 2a1. EduEase displays an error message based on the specific issue.
+
+      Use case resumes at step 1.
 
 *{More to be added}*
 

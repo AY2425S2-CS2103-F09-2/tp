@@ -11,12 +11,20 @@ import seedu.address.logic.commands.exceptions.CommandException;
 public class AddressBookStateManager {
     private static final ArrayList<AddressBook> states = new ArrayList<>();
     private static int currentState = 0;
-    private static Command previousCommand = null;
 
     /**
      * Instantiate task list with old task list data loaded in.
      */
     public AddressBookStateManager() {
+    }
+
+    /**
+     * Reset the state manager.
+     */
+    public static void reset() {
+        states.clear();
+        currentState = 0;
+        previousCommand = null;
     }
 
     /**
@@ -51,6 +59,7 @@ public class AddressBookStateManager {
 
     /**
      * Undoes an Undo command by moving to the state before an Undo command.
+
      */
     public static void redo() throws CommandException {
         if (currentState < states.size()) {
@@ -67,12 +76,5 @@ public class AddressBookStateManager {
         while (states.size() > currentState) {
             states.remove(states.size() - 1);
         }
-    }
-
-    /**
-     * Set the previous command.
-     */
-    public static void setPreviousCommand(Command command) {
-        previousCommand = command;
     }
 }
