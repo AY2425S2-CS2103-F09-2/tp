@@ -208,7 +208,7 @@ Format: `undo`
 
 ### Redoing the last command : `redo`
 
-Redoes the last command that changes the data. If there is no command to redo, the user will be informed.
+Undo the undo command. If there is no command to redo, the user will be informed.
 
 Format: `redo`
 

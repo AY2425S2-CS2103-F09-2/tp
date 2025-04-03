@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.exceptions.NoPreviousModelStateException;
 
 /**
  * StateList class that contains the states of TaskLists
@@ -35,11 +34,11 @@ public class AddressBookStateManager {
     /**
      * Move current state number back by one
      */
-    public static void undo() throws NoPreviousModelStateException {
+    public static void undo() throws CommandException {
         if (currentState > 1) {
             currentState--;
         } else {
-            throw new NoPreviousModelStateException();
+            throw new CommandException("No previous model state found");
         }
     }
 
@@ -51,13 +50,22 @@ public class AddressBookStateManager {
     }
 
     /**
-     * Get the previous command.
+     * Undoes an Undo command by moving to the state before an Undo command.
      */
-    public static Command getPreviousCommand() throws CommandException {
-        if (previousCommand != null) {
-            return previousCommand;
+    public static void redo() throws CommandException {
+        if (currentState < states.size()) {
+            currentState++;
         } else {
-            throw new CommandException("No previous command found");
+            throw new CommandException("No state to redo");
+        }
+    }
+
+    /**
+     * Remove all states after the current state.
+     */
+    public static void clearFutureStates() {
+        while (states.size() > currentState) {
+            states.remove(states.size() - 1);
         }
     }
 
