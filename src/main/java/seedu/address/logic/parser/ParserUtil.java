@@ -163,4 +163,13 @@ public class ParserUtil {
             throw new ParseException("Invalid duration format! Expected format: XhYm (e.g., 1h30m)");
         }
     }
+
+    public static String parseEvent(String eventStr) throws ParseException {
+        requireNonNull(eventStr);
+        String trimmedEvent = eventStr.trim();
+        if (trimmedEvent.isEmpty()) {
+            throw new ParseException("Event name cannot be empty!");
+        }
+        return trimmedEvent;
+    }
 }
