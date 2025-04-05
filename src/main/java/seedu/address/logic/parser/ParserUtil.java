@@ -164,6 +164,13 @@ public class ParserUtil {
         }
     }
 
+    /**
+     * Parses a {@code String eventStr} into a valid event name.
+     * Ensures that the string is non-empty and trimmed.
+     * @param eventStr The string representing the event.
+     * @return A trimmed, valid event string.
+     * @throws ParseException If the input string is empty or invalid.
+     */
     public static String parseEvent(String eventStr) throws ParseException {
         requireNonNull(eventStr);
         String trimmedEvent = eventStr.trim();
