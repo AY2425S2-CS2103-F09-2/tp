@@ -33,9 +33,26 @@ public class AddCommandParser implements Parser<AddCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_PARENTPHONE, PREFIX_EMAIL,
                         PREFIX_TAG);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE, PREFIX_PARENTPHONE, PREFIX_EMAIL)
-                || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        // Check for missing compulsory prefixes
+        StringBuilder missingPrefixes = new StringBuilder();
+        if (argMultimap.getValue(PREFIX_NAME).isEmpty()) {
+            missingPrefixes.append(PREFIX_NAME).append(" ");
+        }
+        if (argMultimap.getValue(PREFIX_PHONE).isEmpty()) {
+            missingPrefixes.append(PREFIX_PHONE).append(" ");
+        }
+        if (argMultimap.getValue(PREFIX_PARENTPHONE).isEmpty()) {
+            missingPrefixes.append(PREFIX_PARENTPHONE).append(" ");
+        }
+        if (argMultimap.getValue(PREFIX_EMAIL).isEmpty()) {
+            missingPrefixes.append(PREFIX_EMAIL).append(" ");
+        }
+
+        if (!missingPrefixes.isEmpty() || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                            getMissingPrefixesMessage(missingPrefixes.toString().trim(),
+                                    AddCommand.MESSAGE_USAGE)));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_PARENTPHONE, PREFIX_EMAIL);
@@ -46,7 +63,6 @@ public class AddCommandParser implements Parser<AddCommand> {
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
         Person person = new Person(name, phone, parentPhone, email, tagList);
-
         return new AddCommand(person);
     }
 
@@ -58,4 +74,13 @@ public class AddCommandParser implements Parser<AddCommand> {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 
+    /**
+     * Returns a formatted error message indicating which prefixes are missing.
+     */
+    private static String getMissingPrefixesMessage(String missingPrefixes, String usageMessage) {
+        if (missingPrefixes.isEmpty()) {
+            return usageMessage;
+        }
+        return "Missing the following required fields: " + missingPrefixes + "\n" + usageMessage;
+    }
 }
