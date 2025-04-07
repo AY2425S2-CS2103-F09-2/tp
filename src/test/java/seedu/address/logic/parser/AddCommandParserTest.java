@@ -126,27 +126,26 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_compulsoryFieldMissing_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
-
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, "Missing the following required fields");
         // missing name prefix
         assertParseFailure(parser, VALID_NAME_BOB + PHONE_DESC_BOB + PARENTPHONE_DESC_CAR + EMAIL_DESC_BOB,
-                expectedMessage);
+                expectedMessage + ": n/\n" + AddCommand.MESSAGE_USAGE);
 
         // missing phone prefix
         assertParseFailure(parser, NAME_DESC_BOB + VALID_PHONE_BOB + PARENTPHONE_DESC_CAR + EMAIL_DESC_BOB,
-                expectedMessage);
+                expectedMessage + ": p/\n" + AddCommand.MESSAGE_USAGE);
 
         // missing parent phone prefix
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + VALID_PHONE_BOB + EMAIL_DESC_BOB,
-                expectedMessage);
+                expectedMessage + ": pp/\n" + AddCommand.MESSAGE_USAGE);
 
         // missing email prefix
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + PARENTPHONE_DESC_CAR + VALID_EMAIL_BOB,
-                expectedMessage);
+                expectedMessage + ": e/\n" + AddCommand.MESSAGE_USAGE);
 
         // all prefixes missing
         assertParseFailure(parser, VALID_NAME_BOB + VALID_PHONE_BOB + VALID_PHONE_BOB + VALID_EMAIL_BOB,
-                expectedMessage);
+                expectedMessage + ": n/ p/ pp/ e/\n" + AddCommand.MESSAGE_USAGE);
     }
 
     @Test
