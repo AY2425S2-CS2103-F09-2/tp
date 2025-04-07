@@ -85,6 +85,8 @@ tailored specifically for private tutors with young tutees.<br>
   * **Valid Names:** John Doe, O'Connor, Jean-Luc, Ravi S/O Lim
   * **Invalid Names:** O''Connor, -John, Mary-, S//O, 007
 
+* `Phone Number` is based on singapore contacts and is restricted to 8 digits long. Oversea contacts will be added in the future.
+
 </div>
 
 ### Viewing help : `help`
